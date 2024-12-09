@@ -7,7 +7,7 @@ function Categories(props) {
       {category && category.length > 0 ? (
   category.map((eachCategory) => {
       return (
-          <button key={eachCategory} className="mx-4 border-2 rounded-md border-black px-4 border-solid border border-slate-500" onClick={() => {setCurrentCategory(eachCategory)
+          <button key={eachCategory} className="mx-1 border-2 rounded-md px-4 my-1 border-solid border border-white" onClick={() => {setCurrentCategory(eachCategory)
             setPageNum(1)}
           }>
               {eachCategory}

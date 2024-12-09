@@ -8,11 +8,12 @@ import {useSelector} from 'react-redux'
 const Header = (props) => {
   const quantity = useSelector((store) =>{return store.cartReducer.cartQuantity})
   return (
-    <nav className="bg-black flex justify-between items-center">
+    <nav className="bg-[#0A6AEE] flex justify-between items-center">
       {/* Center-aligned links */}
       <ul className="flex flex-row justify-center flex-grow text-white font-bold font-sans">
         <Link to="/" className="px-5"><li>Home</li></Link>
         <Link to="/user" className="px-5"><li>Users</li></Link>
+        <Link to="/cart" className="px-5"><li>Cart</li></Link>
       </ul>
 
       {/* Cart icon at the far right */}

@@ -8,7 +8,7 @@ function productSearch(props) {
       id="search"
       type="text"
       placeholder="Search"
-      className="rounded-md border-solid border-black border-2 outline-none text-black"
+      className="rounded-md border-solid  border-2 outline-none text-black"
       value={search}
       onChange={(e) => {setSearch(e.target.value)
         setPageNum(1)}

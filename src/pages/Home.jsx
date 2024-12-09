@@ -54,14 +54,24 @@ useEffect(()=>{
   
     return (
       <>
-  <div className='bg-black text-white flex flex-row justify-center self-center p-5'>
-<Categories category={category} setCurrentCategory={setCurrentCategory}></Categories>
-<ProductSearch search={search} setSearch={setSearch}></ProductSearch>
-<div className='flex flex-row items-center mx-4'>
-        <FaArrowAltCircleUp className='text-xl cursor-pointer text-white' onClick={()=>setSortDir(1)}/>
-        <FaArrowAltCircleDown className='text-xl cursor-pointer text-white'onClick={()=>setSortDir(-1)}/>
+  <div className='bg-[#0A6AEE] text-white flex flex-col justify-center p-5 lg:flex lg:flex-row '>
+  <div className="flex flex-row justify-center items-center lg:flex-row lg:order-2 pb-3 lg:pb-0">
+    <ProductSearch search={search} setSearch={setSearch} />
 
-        </div>
+    <div className="flex items-center px-1 mt-2 lg:mt-0 lg:ml-4 space-x-1">
+      <FaArrowAltCircleUp
+        className="text-xl cursor-pointer"
+        onClick={() => setSortDir(1)}
+      />
+      <FaArrowAltCircleDown
+        className="text-xl cursor-pointer"
+        onClick={() => setSortDir(-1)}
+      />
+    </div>
+  </div>
+<Categories category={category} setCurrentCategory={setCurrentCategory} className="lg:order-4"></Categories>
+
+
   </div>
       <ProductList filteredSortedGroupByArr={filteredSortedGroupByArr}></ProductList>
       {/* pagenation starts here */}

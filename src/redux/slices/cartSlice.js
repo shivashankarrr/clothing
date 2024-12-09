@@ -1,50 +1,62 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit';
 
 const cartSlice = createSlice({
-    name:"cartSlice",
-    initialState:{
-        cartQuantity:0,
-        // array of objects -> {detail of product , individual quantity of each}
-        cartProducts:[]
+    name: "cartSlice",
+    initialState: {
+        cartQuantity: 0,
+        // array of objects -> {details of the product, individual quantity of each}
+        cartProducts: []
     },
-    reducers:{
-        addToCart:(state,action)=>{
+    reducers: {
+        addToCart: (state, action) => {
             state.cartQuantity++;
-            // we are getting a product from product list component
+            // The product being added from the product list component
             const productToBeAdded = action.payload;
-            // before adding that product blindly into the cart, i am checking if it is
-            // already present or not in cartProduct array. if not present i will newly
-            // add the product into the cartProduct array. If already present, i will increase
-            // quantity value. so here only checking happens
-            const requiredProduct = state.cartProducts
-            .find((cProduct) => {return cProduct.id == productToBeAdded.id})
-            if (requiredProduct == undefined){
-                productToBeAdded.indQuantity = 1;
-                state.cartProducts.push(productToBeAdded);
-            }else{
-                requiredProduct.indQuantity++;
+
+            // Check if the product already exists in the cart
+            const productIndex = state.cartProducts.findIndex(
+                (cProduct) => cProduct.id === productToBeAdded.id
+            );
+
+            if (productIndex === -1) {
+                // If not present, add it with `indQuantity` set to 1
+                state.cartProducts.push({ ...productToBeAdded, indQuantity: 1 });
+            } else {
+                // If already present, create a new object with updated quantity
+                state.cartProducts[productIndex] = {
+                    ...state.cartProducts[productIndex],
+                    indQuantity: state.cartProducts[productIndex].indQuantity + 1
+                };
             }
         },
-    },
-    deleteFromCart:(state,action)=>{
-        
-        const productToBeAdded = action.payload
-        const productIdx = state.cartProducts
-        .findIndex((cProduct)=>{return cProduct.id == productToBeAdded.id})
-        if (productIdx == -1){
+        deleteFromCart: (state, action) => {
+            const productToBeRemoved = action.payload;
 
-        }else{
-            state.cartQuantity--;
-            let product = state.cartProducts[productIdx];
-            if(product.indQuantity == 0){
-                state.cartProducts.splice(productIdx,1)
-            }else{
-                state.cartProducts[productIdx].indQuantity--;
+            // Find the index of the product to be removed
+            const productIndex = state.cartProducts.findIndex(
+                (cProduct) => cProduct.id === productToBeRemoved.id
+            );
+
+            if (productIndex !== -1) {
+                const product = state.cartProducts[productIndex];
+
+                if (product.indQuantity > 1) {
+                    // Decrease the product's quantity
+                    state.cartProducts[productIndex] = {
+                        ...product,
+                        indQuantity: product.indQuantity - 1
+                    };
+                } else {
+                    // Remove the product if quantity reaches 0
+                    state.cartProducts.splice(productIndex, 1);
+                }
+
+                state.cartQuantity--; // Update the total cart quantity
             }
-        }
-    },
-})
+        },
+    }
+});
 
-export  const action = cartSlice.actions
+export const action = cartSlice.actions;
 
 export default cartSlice;
